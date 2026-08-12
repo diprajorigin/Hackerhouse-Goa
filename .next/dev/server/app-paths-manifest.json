@@ -1,0 +1,6 @@
+{
+  "/builder/page": "app/builder/page.js",
+  "/generate/page": "app/generate/page.js",
+  "/page": "app/page.js",
+  "/pass/page": "app/pass/page.js"
+}
