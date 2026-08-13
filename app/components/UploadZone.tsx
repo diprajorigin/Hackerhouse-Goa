@@ -11,11 +11,11 @@ export default function UploadZone({
 }: UploadZoneProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleFile = (file?: File) => {
+  const processFile = (file?: File) => {
     if (!file) return;
 
     if (!file.type.startsWith("image/")) {
-      alert("Please upload an image file.");
+      alert("Please select an image file.");
       return;
     }
 
@@ -38,20 +38,9 @@ export default function UploadZone({
       }}
       onDrop={(event) => {
         event.preventDefault();
-        handleFile(event.dataTransfer.files?.[0]);
+        processFile(event.dataTransfer.files?.[0]);
       }}
-      className="
-        group
-        cursor-pointer
-        border-2
-        border-dashed
-        border-[#FFD600]
-        p-10
-        text-center
-        transition-all
-        duration-200
-        hover:bg-[#FFD600]/10
-      "
+      className="cursor-pointer border-2 border-dashed border-[#FFD600] p-10 text-center transition-all duration-200 hover:bg-[#FFD600]/10"
     >
       <input
         ref={inputRef}
@@ -59,13 +48,11 @@ export default function UploadZone({
         accept="image/jpeg,image/png,image/heic,image/heif"
         className="hidden"
         onChange={(event) => {
-          handleFile(event.target.files?.[0]);
+          processFile(event.target.files?.[0]);
         }}
       />
 
-      <div className="text-5xl transition-transform group-hover:scale-110">
-        📸
-      </div>
+      <div className="text-5xl">📸</div>
 
       <p className="mt-5 font-black uppercase tracking-wide">
         Drop your photo here

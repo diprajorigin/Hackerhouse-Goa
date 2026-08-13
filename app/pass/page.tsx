@@ -1,289 +1,204 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import BuilderCard from "../components/BuilderCard";
+import ShareButtons from "../components/ShareButtons";
 
 type BuilderData = {
   name: string;
-  role: string;
+  stack: string;
   photo: string;
+  builderClass: string;
+  builderId: string;
 };
 
 export default function PassPage() {
-
-  const [data, setData] =
-    useState<BuilderData | null>(null);
-
+  const [data, setData] = useState<BuilderData>({
+    name: "YOUR NAME",
+    stack: "YOUR STACK",
+    photo: "",
+    builderClass: "FRONTIER BUILDER",
+    builderId: "HH-GOA-2026",
+  });
 
   useEffect(() => {
+    const saved = localStorage.getItem("hh-builder-data");
 
-    const saved =
-      localStorage.getItem("hh-builder-data");
+    if (!saved) return;
 
-    if (saved) {
-      setData(JSON.parse(saved));
+    try {
+      const parsed = JSON.parse(saved);
+
+      setData({
+        name: parsed.name || "YOUR NAME",
+        stack: parsed.stack || "YOUR STACK",
+        photo: parsed.photo || "",
+        builderClass:
+          parsed.builderClass || "FRONTIER BUILDER",
+        builderId:
+          parsed.builderId || "HH-GOA-2026",
+      });
+    } catch (error) {
+      console.error(
+        "Could not load builder data:",
+        error
+      );
     }
-
   }, []);
-
-
-  if (!data) {
-
-    return (
-      <main className="pass-loading">
-        LOADING BUILDER ID...
-      </main>
-    );
-
-  }
-
 
   return (
     <main className="pass-page">
 
-      {/* HEADER */}
+      {/* =========================================
+          HEADER
+      ========================================= */}
 
-      <header className="pass-nav">
+      <header className="pass-header">
 
-        <Link
-          href="/"
-          className="pass-logo"
-        >
-          HH
-          <span>GOA · 2026</span>
-        </Link>
+        <div className="pass-header-brand">
+          <span className="pass-brand-box">
+            HH
+          </span>
 
-        <Link
-          href="/builder"
-          className="pass-create"
-        >
-          CREATE ANOTHER
-        </Link>
+          <div>
+            <strong>HACKER HOUSE</strong>
+            <small>GOA · 2026</small>
+          </div>
+        </div>
+
+        <div className="pass-header-right">
+          <span>YOUR BUILDER ID</span>
+          <span className="pass-header-star">
+            ★
+          </span>
+        </div>
 
       </header>
 
 
-      {/* HERO */}
+      {/* =========================================
+          MAIN
+      ========================================= */}
 
-      <section className="pass-hero">
+      <section className="pass-main">
 
-        <div className="pass-eyebrow">
-          IT'S OFFICIAL
-        </div>
+        <div className="pass-intro">
 
-        <h1>
-          YOUR
-          <br />
-          BUILDER ID<span>.</span>
-        </h1>
+          <p className="pass-eyebrow">
+            BUILDER ID · 01
+          </p>
 
-        <p>
-          You built something.
-          You shipped something.
-          Now show the internet you were here.
-        </p>
+          <h1 className="pass-title">
+            YOU&apos;RE
+            <br />
+            <span>IN.</span>
+          </h1>
 
-      </section>
+          <p className="pass-description">
+            Your official Hacker House Goa 2026
+            Builder ID is ready.
+          </p>
 
-
-      {/* CARD */}
-
-      <section className="id-wrapper">
-
-        <div className="id-card">
-
-          {/* CARD HEADER */}
-
-          <div className="id-top">
-
-            <div>
-
-              <strong>
-                HACKER
-                <br />
-                HOUSE
-              </strong>
-
-              <span>
-                GOA · 2026
-              </span>
-
-            </div>
-
-            <div className="id-star">
-              ★
-            </div>
-
-          </div>
-
-
-          {/* EVENT */}
-
-          <div className="id-event">
-
-            <span>
-              GOA, INDIA
-            </span>
-
-            <span>
-              28 — 31 OCT 2026
-            </span>
-
-          </div>
-
-
-          {/* PHOTO */}
-
-          <div className="id-photo">
-
-            {data.photo ? (
-
-              <img
-                src={data.photo}
-                alt={data.name}
-              />
-
-            ) : (
-
-              <div className="id-photo-placeholder">
-                BUILDER
-              </div>
-
-            )}
-
-          </div>
-
-
-          {/* NAME */}
-
-          <div className="id-name">
-            {data.name}
-          </div>
-
-
-          {/* ROLE */}
-
-          <div className="id-role">
-            {data.role}
-          </div>
-
-
-          {/* INFORMATION */}
-
-          <div className="id-details">
-
-            <div>
-              <small>
-                BUILDER CLASS
-              </small>
-
-              <strong>
-                TERMINAL BUILDER
-              </strong>
-            </div>
-
-            <div>
-              <small>
-                LOCATION
-              </small>
-
-              <strong>
-                GOA, INDIA
-              </strong>
-            </div>
-
-            <div>
-              <small>
-                STATUS
-              </small>
-
-              <strong>
-                BUILDING
-              </strong>
-            </div>
-
-            <div>
-              <small>
-                ID
-              </small>
-
-              <strong>
-                HH-GOA-2026
-              </strong>
-            </div>
-
-          </div>
-
-
-          {/* CARD FOOTER */}
-
-          <div className="id-bottom">
-
-            <strong>
-              BUILD · SHIP · REPEAT
-            </strong>
-
-            <span>
-              #FRAMEINGOA
-            </span>
-
+          <div className="pass-meta">
+            <span>GOA, INDIA</span>
+            <span>28 — 31 OCT 2026</span>
           </div>
 
         </div>
 
 
-        {/* ACTIONS */}
+        {/* =====================================
+            CARD
+        ===================================== */}
+
+        <div className="pass-card-wrapper">
+
+          <div className="pass-card-label">
+            YOUR BUILDER CARD
+            <span>HH-GOA-2026</span>
+          </div>
+
+          <BuilderCard
+            name={data.name}
+            stack={data.stack}
+            photo={data.photo}
+            builderClass={data.builderClass}
+            builderId={data.builderId}
+          />
+
+        </div>
+
+
+        {/* =====================================
+            ACTIONS
+        ===================================== */}
 
         <div className="pass-actions">
 
-          <button
-            onClick={() => window.print()}
-          >
-            ↓ SAVE / PRINT PASS
-          </button>
-
+          <ShareButtons
+            cardId="builder-id-card"
+            name={data.name}
+          />
 
           <button
+            type="button"
+            className="pass-button create-another-button"
             onClick={() => {
-
-              if (navigator.share) {
-
-                navigator.share({
-                  title:
-                    "My Hacker House Goa 2026 Builder ID",
-                  text:
-                    "I built something at Hacker House Goa 2026.",
-                  url:
-                    window.location.href,
-                });
-
-              } else {
-
-                navigator.clipboard.writeText(
-                  window.location.href
-                );
-
-                alert("Link copied!");
-
-              }
-
+              window.location.href = "/builder";
             }}
           >
-            ↗ SHARE MY PASS
+            ↻ CREATE ANOTHER PASS
           </button>
 
+        </div>
 
-          <Link href="/builder">
-            ↻ GENERATE ANOTHER
-          </Link>
+
+        {/* =====================================
+            SHARE MESSAGE
+        ===================================== */}
+
+        <div className="pass-share-note">
+
+          <span className="pass-share-star">
+            ★
+          </span>
+
+          <div>
+            <strong>
+              MAKE SOMETHING WORTH SHARING.
+            </strong>
+
+            <p>
+              Download your Builder ID, post it,
+              and tag <b>#FrameInGoa</b>.
+            </p>
+          </div>
 
         </div>
 
       </section>
 
 
+      {/* =========================================
+          FOOTER
+      ========================================= */}
+
       <footer className="pass-footer">
-        HACKER HOUSE GOA 2026 · BUILD IN GOA · SHIP FROM PARADISE
+
+        <span>HACKER HOUSE GOA 2026</span>
+
+        <span>•</span>
+
+        <span>BUILD IN GOA</span>
+
+        <span>•</span>
+
+        <span>SHIP FROM PARADISE</span>
+
+        <span>•</span>
+
+        <span>#FRAMEINGOA</span>
+
       </footer>
 
     </main>
